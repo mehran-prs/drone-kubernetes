@@ -6,11 +6,12 @@ services:
 
 script:
   - export SHORT_TAG=${TRAVIS_COMMIT:0:7}
-  - export IMAGE_NAME=${TRAVIS_REPO_SLUG//-}
+  - REPO=(${TRAVIS_REPO_SLUG//\// }) && export IMAGE_NAME=${REPO[0]//-}/${REPO[1]}
   - echo building image -\> ${IMAGE_NAME}:${SHORT_TAG}
   - docker build --no-cache -t ${IMAGE_NAME}:${SHORT_TAG} .
   - docker tag ${IMAGE_NAME}:${SHORT_TAG} ${IMAGE_NAME}:latest
-  - echo "$DOCKER_PASSWORD" | docker login docker.io -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push ${IMAGE_NAME}:${SHORT_TAG}
+  - docker push ${IMAGE_NAME}:latest
 
 
