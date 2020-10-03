@@ -3,16 +3,14 @@ dist: trusty
 services:
   - docker
 
-before_install:
-  - git rev-list --all --count > .version
-  - export SHORT_TAG=${TRAVIS_COMMIT:0:7}
-  - echo building image -\> ${TRAVIS_REPO_SLUG}:${SHORT_TAG}
-  - docker build --no-cache -t ${TRAVIS_REPO_SLUG}:${SHORT_TAG} .
-  - docker tag ${TRAVIS_REPO_SLUG}:${SHORT_TAG} ${TRAVIS_REPO_SLUG}:latest
 
 script:
   - export SHORT_TAG=${TRAVIS_COMMIT:0:7}
+  - export IMAGE_NAME=${TRAVIS_REPO_SLUG//-}
+  - echo building image -\> ${IMAGE_NAME}:${SHORT_TAG}
+  - docker build --no-cache -t ${IMAGE_NAME}:${SHORT_TAG} .
+  - docker tag ${IMAGE_NAME}:${SHORT_TAG} ${IMAGE_NAME}:latest
   - echo "$DOCKER_PASSWORD" | docker login docker.io -u "$DOCKER_USERNAME" --password-stdin
-  - docker push ${TRAVIS_REPO_SLUG}:${SHORT_TAG}
+  - docker push ${IMAGE_NAME}:${SHORT_TAG}
 
 
