@@ -1,0 +1,14 @@
+dist: trusty
+
+jobs:
+  include:
+    - stage: build docker image
+      script:
+        - git rev-list --all --count > .version
+        - export REPO_IMAGE=$DOCKER_USERNAME/drone-kubernetes
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker build -t drone_kubernetes .
+        - docker images
+        - docker tag drone_kubernetes $REPO_IMAGE:latest
+        - docker tag drone_kubernetes $REPO_IMAGE:$(cat .version)
+        - docker push $REPO_IMAGE
