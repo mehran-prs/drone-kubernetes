@@ -5,7 +5,7 @@ services:
 
 before_install:
   - git rev-list --all --count > .version
-  - echo "building image -> ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}"
+  - echo building image -\> ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
   - docker build --no-cache -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
   - docker tag ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} ${TRAVIS_REPO_SLUG}:latest
 
