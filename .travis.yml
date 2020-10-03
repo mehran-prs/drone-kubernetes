@@ -1,15 +1,16 @@
 dist: trusty
 
-jobs:
-  include:
-    - stage: build docker image
-      if: branch = master
-      script:
-        - git rev-list --all --count > .version
-        - export REPO_IMAGE=$DOCKER_USERNAME/drone-kubernetes
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker build -t drone_kubernetes .
-        - docker images
-        - docker tag drone_kubernetes $REPO_IMAGE:latest
-        - docker tag drone_kubernetes $REPO_IMAGE:$(cat .version)
-        - docker push $REPO_IMAGE
+services:
+  - docker
+
+before_install:
+  - git rev-list --all --count > .version
+  - echo building image -> ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
+  - docker build --no-cache -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
+  - docker tag ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} ${TRAVIS_REPO_SLUG}:latest
+
+script:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
+
+
