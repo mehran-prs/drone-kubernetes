@@ -5,7 +5,7 @@ services:
 
 before_install:
   - git rev-list --all --count > .version
-  - export SHORT_TAG={TRAVIS_COMMIT:0:7}
+  - export SHORT_TAG=${TRAVIS_COMMIT:0:7}
   - echo building image -\> ${TRAVIS_REPO_SLUG}:${SHORT_TAG}
   - docker build --no-cache -t ${TRAVIS_REPO_SLUG}:${SHORT_TAG} .
   - docker tag ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} ${SHORT_TAG}:latest
