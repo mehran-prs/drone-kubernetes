@@ -3,6 +3,7 @@ dist: trusty
 jobs:
   include:
     - stage: build docker image
+      if: branch = master
       script:
         - git rev-list --all --count > .version
         - export REPO_IMAGE=$DOCKER_USERNAME/drone-kubernetes
