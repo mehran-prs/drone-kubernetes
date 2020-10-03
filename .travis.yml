@@ -3,6 +3,10 @@ dist: trusty
 services:
   - docker
 
+# safelist
+#branches:
+#  only:
+#    - master
 
 script:
   - export SHORT_TAG=${TRAVIS_COMMIT:0:7}
