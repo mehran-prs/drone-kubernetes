@@ -3,7 +3,11 @@ dist: trusty
 services:
   - docker
 
-if: tag IS present
+# if: tag IS present
+
+on:
+    tags: true
+    condition: $(git branch --contains $TRAVIS_TAG | grep -l '^[\* ] master$')
 
 script:
 #   - export SHORT_TAG=${TRAVIS_COMMIT:0:7}
