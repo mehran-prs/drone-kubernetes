@@ -3,7 +3,7 @@ dist: trusty
 services:
   - docker
 
-if: branch = master AND tag IS present
+# if: branch = master AND tag IS present
 
 script:
 #   - export SHORT_TAG=${TRAVIS_COMMIT:0:7}
