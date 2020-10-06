@@ -3,12 +3,12 @@
 
 # if travis_tag is not set or is empty
 if [[ -z $TRAVIS_TAG ]]; then
- travis_terminate 0    # quit the build
+ exit 1    # quit the build
 fi
 # Travis does a shallow clone by default
 # so `master` is not present in the local metadata
 # in a build for another branch
 git fetch origin master:master
 if ! (git branch --contains "$TRAVIS_TAG" | grep -qxE '. master'); then
-    travis_terminate 0    # quit the build early
+    exit 1    # quit the build early
 fi

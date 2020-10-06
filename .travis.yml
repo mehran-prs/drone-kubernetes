@@ -4,8 +4,8 @@ services:
   - docker
 
 script:
-#   - export SHORT_TAG=${TRAVIS_COMMIT:0:7}
-  - ./just_master_tags.sh
+  #   - export SHORT_TAG=${TRAVIS_COMMIT:0:7}
+  - ./just_master_tags.sh || travis_terminate 0
   - export SHORT_TAG=${TRAVIS_TAG}
   - REPO=(${TRAVIS_REPO_SLUG//\// }) && export IMAGE_NAME=${REPO[0]//-}/${REPO[1]}
   - echo building image -\> ${IMAGE_NAME}:${SHORT_TAG}
