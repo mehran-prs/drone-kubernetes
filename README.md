@@ -9,7 +9,7 @@ This pipeline will update the `my-deployment` deployment with the image tagged `
 ```yaml
     pipeline:
         deploy:
-            image: quay.io/honestbee/drone-kubernetes
+            image: mehranprs/drone-kubernetes
             deployment: my-deployment
             repo: myorg/myrepo
             container: my-container
@@ -23,7 +23,7 @@ Deploying containers across several deployments, eg in a scheduler-worker setup.
 ```yaml
     pipeline:
         deploy:
-            image: quay.io/honestbee/drone-kubernetes
+            image: mehranprs/drone-kubernetes
             deployment: [server-deploy, worker-deploy]
             repo: myorg/myrepo
             container: my-container
@@ -37,7 +37,7 @@ Deploying multiple containers within the same deployment.
 ```yaml
     pipeline:
         deploy:
-            image: quay.io/honestbee/drone-kubernetes
+            image: mehranprs/drone-kubernetes
             deployment: my-deployment
             repo: myorg/myrepo
             container: [container1, container2]
@@ -53,7 +53,7 @@ This more complex example demonstrates how to deploy to several environments bas
 ```yaml
     pipeline:
         deploy-staging:
-            image: quay.io/honestbee/drone-kubernetes
+            image: mehranprs/drone-kubernetes
             kubernetes_server: ${KUBERNETES_SERVER_STAGING}
             kubernetes_cert: ${KUBERNETES_CERT_STAGING}
             kubernetes_token: ${KUBERNETES_TOKEN_STAGING}
@@ -68,7 +68,7 @@ This more complex example demonstrates how to deploy to several environments bas
                 branch: [ staging ]
 
         deploy-prod:
-            image: quay.io/honestbee/drone-kubernetes
+            image: mehranprs/drone-kubernetes
             kubernetes_server: ${KUBERNETES_SERVER_PROD}
             kubernetes_token: ${KUBERNETES_TOKEN_PROD}
             # notice: no tls verification will be done, warning will is printed
